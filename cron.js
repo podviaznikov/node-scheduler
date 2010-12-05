@@ -1,23 +1,35 @@
 var CronTime = require('./cron.time').CronTime;
-function CronJob(cronTime, event) 
+function CronJob(cronTime, event,conf) 
 {
 	if (!(this instanceof CronJob))
 	{
 	   return new CronJob(cronTime, event);
 	}
-	
+	this.conf = conf;
+	if(this.conf)
+	{
+	    this.minInterval = this.conf.minInterval;
+	}
+	else
+	{
+	    this.minInterval = 1000;
+	}
 	this.events = [event];
 	this.cronTime = new CronTime(cronTime);
 	this.now = {};
 	this.initiated = false;
 	this.timer;
-	this.clock();
 };
 
 
 CronJob.prototype.addEvent = function(event)
 {
     this.events.push(event);
+};
+
+CronJob.prototype.start = function()
+{
+    this.clock(); 
 };
 
 CronJob.prototype.stop = function()
@@ -57,7 +69,7 @@ CronJob.prototype.clock = function()
 		return;
 	}
 	
-	this.timer = this.timer || setInterval(function(){self.clock();}, 1000);
+	this.timer = this.timer || setInterval(function(){self.clock();}, this.minInterval);
 	//TODO (podviaznikov) is this locale dependent
 	now.second = date.getSeconds();
 	now.minute = date.getMinutes();

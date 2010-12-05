@@ -1,6 +1,6 @@
 var scheduler = require('../scheduler').create(),
     sys = require('sys');
-scheduler.addJob('* */1 * * * *', function()
+scheduler.addAndRunJob('*/2 * * * * *', function()
 {
-    sys.log('test');
+   sys.log('test');
 });
