@@ -20,15 +20,19 @@ function CronTime(time)
 	this._parse();
 };
 
-CronTime.prototype = {
-  _parse: function() {
+CronTime.prototype = 
+{
+  _parse: function() 
+  {
 
     var aliases = this.aliases,
-    source = this.source.replace(/[a-z]/i, function(alias){
+    source = this.source.replace(/[a-z]/i, function(alias)
+    {
 
     			   alias = alias.toLowerCase();
 
-				   if (alias in aliases) {
+				   if (alias in aliases) 
+                                   {
 				     return aliases[alias];
 				   }
 
@@ -38,13 +42,15 @@ CronTime.prototype = {
     split = this.source.replace(/^\s\s*|\s\s*$/g, '').split(/\s+/),
     cur, len = 6;
 
-    while (len--) {
+    while (len--) 
+    {
       cur = split[len] || '*';
       this._parseField(cur, this.map[len], this.constraints[len]);
     }
 
   },
-  _parseField: function(field, type, constraints) {
+  _parseField: function(field, type, constraints) 
+  {
 
     var rangePattern = /(\d+?)(?:-(\d+?))?(?:\/(\d+?))?(?:,|$)/g,
     typeObj = this[type],
@@ -55,9 +61,9 @@ CronTime.prototype = {
     // * is a shortcut to [lower-upper] range
     field = field.replace(/\*/g,  low + '-' + high);
 
-    if (field.match(rangePattern)) {
-
-      field.replace(rangePattern, function($0, lower, upper, step) {
+    if (field.match(rangePattern))
+    {
+        field.replace(rangePattern, function($0, lower, upper, step) {
 
                       step = step || 1;
 
@@ -75,7 +81,9 @@ CronTime.prototype = {
 
                     });
 
-    } else {
+    } 
+    else 
+    {
 
       throw new Error('Field (' + field + ') cannot be parsed');
 
