@@ -35,10 +35,8 @@ Scheduler.prototype.stopAll=function()
 Scheduler.prototype.stop=function(id)
 {
     var job = this.jobs[id];
-    sys.log('Job to stop='+sys.inspect(job));
     if(job)
     {
-        sys.log('job stop method is called');
         job.stop();
     }
 };
