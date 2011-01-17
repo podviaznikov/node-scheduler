@@ -37,8 +37,15 @@ exports.testStopTwoJobs=function()
     {
         sys.log('test');
     });
-    assert.equal(scheduler.count(),2);
-    scheduler.stopAll();
-    assert.equal(scheduler.count(),2);
-    scheduler.releaseAll();
+    setTimeout(function()
+    {
+        sys.log('called');
+        assert.equal(scheduler.count(),2);
+        scheduler.stop(jobId1);
+        scheduler.stop(jobId2);
+        assert.equal(scheduler.count(),2);
+        scheduler.releaseAll();
+        assert.equal(scheduler.count(),0);
+    },5000);
+
 };

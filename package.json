@@ -8,5 +8,5 @@
   "scripts": {},
   "bin": {},
   "main":"scheduler.js",
-  "engines": { "node": ">= 0.2.3" }
+  "engines": { "node": ">= 0.2.0" }
 }

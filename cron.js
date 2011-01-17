@@ -1,4 +1,6 @@
-var CronTime = require('./cron.time').CronTime;
+var CronTime = require('./cron.time').CronTime,
+    sys = require('sys');
+
 function CronJob(id,cronTime,event,conf) 
 {
 	if (!(this instanceof CronJob))
@@ -34,9 +36,12 @@ CronJob.prototype.start = function()
 
 CronJob.prototype.stop = function()
 {
-    if (!this.initiated)
+    if (!this.initiated && this.timer)
 	{
+	   sys.log('before stop;'+sys.inspect(this.timer));
 	   clearInterval(this.timer);
+	   sys.log('Interval cleared for id='+this.id);
+	   sys.log('after stop;'+sys.inspect(this.timer));
 	}  
 };
 
@@ -68,8 +73,9 @@ CronJob.prototype.clock = function()
 		         }, Math.ceil(+date / 1000) * 1000 - +date);
 		return;
 	}
-	
+	//sys.log('first time timer defined='+sys.inspect(this.timer));
 	this.timer = this.timer || setInterval(function(){self.clock();}, this.minInterval);
+        sys.log('timer defined='+sys.inspect(this.timer));
 	//TODO (podviaznikov) is this locale dependent
 	now.second = date.getSeconds();
 	now.minute = date.getMinutes();
