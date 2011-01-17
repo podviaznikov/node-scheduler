@@ -1,5 +1,4 @@
-var CronTime = require('./cron.time').CronTime,
-    sys = require('sys');
+var CronTime = require('./cron.time').CronTime;
 
 function CronJob(id,cronTime,event,conf) 
 {
@@ -69,14 +68,11 @@ CronJob.prototype.clock = function()
 		         }, Math.ceil(+date / 1000) * 1000 - +date);
 		return;
 	}
-	sys.log('Paused='+this.paused);
         if(this.paused)
 	{
 		return;
 	}
-	//sys.log('first time timer defined='+sys.inspect(this.timer));
 	this.timer = this.timer || setInterval(function(){self.clock();}, this.minInterval);
-        sys.log('timer defined='+sys.inspect(this.timer));
 	//TODO (podviaznikov) is this locale dependent
 	now.second = date.getSeconds();
 	now.minute = date.getMinutes();
