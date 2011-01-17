@@ -21,6 +21,7 @@ function CronJob(id,cronTime,event,conf)
 	this.cronTime = new CronTime(cronTime);
 	this.now = {};
 	this.initiated = false;
+        this.paused = false;
 	this.timer;
 };
 
@@ -36,13 +37,8 @@ CronJob.prototype.start = function()
 
 CronJob.prototype.stop = function()
 {
-    if (!this.initiated && this.timer)
-	{
-	   sys.log('before stop;'+sys.inspect(this.timer));
-	   clearInterval(this.timer);
-	   sys.log('Interval cleared for id='+this.id);
-	   sys.log('after stop;'+sys.inspect(this.timer));
-	}  
+    clearInterval(this.timer);
+    this.paused = true;
 };
 
 CronJob.prototype.runEvents = function()
@@ -71,6 +67,11 @@ CronJob.prototype.clock = function()
 		           self.initiated = true;
 		           self.clock();
 		         }, Math.ceil(+date / 1000) * 1000 - +date);
+		return;
+	}
+	sys.log('Paused='+this.paused);
+        if(this.paused)
+	{
 		return;
 	}
 	//sys.log('first time timer defined='+sys.inspect(this.timer));
