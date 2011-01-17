@@ -1,11 +1,12 @@
 var CronTime = require('./cron.time').CronTime;
-function CronJob(cronTime, event,conf) 
+function CronJob(id,cronTime,event,conf) 
 {
 	if (!(this instanceof CronJob))
 	{
-	   return new CronJob(cronTime, event);
+	   return new CronJob(id,cronTime, event);
 	}
-	this.conf = conf;
+	Object.defineProperty(this, 'id', {value:id,writable : false});
+	Object.defineProperty(this, 'conf', {value:conf,writable : false});
 	if(this.conf)
 	{
 	    this.minInterval = this.conf.minInterval;
@@ -20,7 +21,6 @@ function CronJob(cronTime, event,conf)
 	this.initiated = false;
 	this.timer;
 };
-
 
 CronJob.prototype.addEvent = function(event)
 {
