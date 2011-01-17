@@ -1,11 +1,14 @@
-var CronTime = require('./cron.time').CronTime;
-function CronJob(cronTime, event,conf) 
+var CronTime = require('./cron.time').CronTime,
+    sys = require('sys');
+
+function CronJob(id,cronTime,event,conf) 
 {
 	if (!(this instanceof CronJob))
 	{
-	   return new CronJob(cronTime, event);
+	   return new CronJob(id,cronTime, event);
 	}
-	this.conf = conf;
+	Object.defineProperty(this, 'id', {value:id,writable : false});
+	Object.defineProperty(this, 'conf', {value:conf,writable : false});
 	if(this.conf)
 	{
 	    this.minInterval = this.conf.minInterval;
@@ -18,9 +21,9 @@ function CronJob(cronTime, event,conf)
 	this.cronTime = new CronTime(cronTime);
 	this.now = {};
 	this.initiated = false;
+        this.paused = false;
 	this.timer;
 };
-
 
 CronJob.prototype.addEvent = function(event)
 {
@@ -34,10 +37,8 @@ CronJob.prototype.start = function()
 
 CronJob.prototype.stop = function()
 {
-    if (!this.initiated)
-	{
-	   clearInterval(this.timer);
-	}  
+    clearInterval(this.timer);
+    this.paused = true;
 };
 
 CronJob.prototype.runEvents = function()
@@ -68,8 +69,14 @@ CronJob.prototype.clock = function()
 		         }, Math.ceil(+date / 1000) * 1000 - +date);
 		return;
 	}
-	
+	sys.log('Paused='+this.paused);
+        if(this.paused)
+	{
+		return;
+	}
+	//sys.log('first time timer defined='+sys.inspect(this.timer));
 	this.timer = this.timer || setInterval(function(){self.clock();}, this.minInterval);
+        sys.log('timer defined='+sys.inspect(this.timer));
 	//TODO (podviaznikov) is this locale dependent
 	now.second = date.getSeconds();
 	now.minute = date.getMinutes();
