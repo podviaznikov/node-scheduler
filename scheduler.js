@@ -23,7 +23,12 @@ Scheduler.prototype.startAll=function()
 };
 Scheduler.prototype.stopAll=function()
 {
-    this.jobs.forEach(job.stop, job);
+    var ids = Object.keys(this.jobs);
+    for(var i=0;i<ids.length;i++)
+    {
+        var jobId=ids[i];
+        this.stop(jobId);
+    }
 };
 Scheduler.prototype.stop=function(id)
 {
@@ -35,8 +40,12 @@ Scheduler.prototype.stop=function(id)
 };
 Scheduler.prototype.releaseAll=function()
 {
-    this.jobs.forEach(job.stop, job);
-    this.jobs = {};
+    var ids = Object.keys(this.jobs);
+    for(var i=0;i<ids.length;i++)
+    {
+        var jobId=ids[i];
+        this.release(jobId);
+    }
 };
 Scheduler.prototype.release=function(id)
 {
