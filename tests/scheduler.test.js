@@ -1,6 +1,6 @@
 var scheduler = require('../scheduler').create(),
     assert = require('assert'),
-    sys = require('sys');
+    sys = require('util');
 exports.testAddJobAndDelete=function()
 {
     var jobId='id1';

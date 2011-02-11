@@ -1,5 +1,4 @@
-var sys = require('sys'),
-    CronJob = require('./cron').CronJob;
+var CronJob = require('./cron').CronJob;
 function Scheduler()
 {
     this.jobs = {};
