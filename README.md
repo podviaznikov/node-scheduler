@@ -1,5 +1,6 @@
 # Scheduler
 Simpler library for managing CronJobs.
+Each job can be identified by id.
 
 ##TODO:
 1. job should be run using web workers if needed.
