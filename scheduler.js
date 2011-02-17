@@ -26,9 +26,8 @@ Scheduler.prototype.addJob=function(id,cronMask,task)
 };
 Scheduler.prototype.addAndRunJob=function(id,cronMask,task)
 {
-    var job = new CronJob(id,cronMask,task);
+    var job = this.addJob(id,cronMask,task);
     job.start();
-    this.jobs[id]=job;
     return job;
 };
 Scheduler.prototype.startAll=function()
