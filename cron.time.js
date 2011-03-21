@@ -18,7 +18,7 @@ function CronTime(time)
 	this.dayOfWeek = {};
 	
 	this._parse();
-};
+}
 
 CronTime.prototype = 
 {
@@ -29,23 +29,23 @@ CronTime.prototype =
     source = this.source.replace(/[a-z]/i, function(alias)
     {
 
-    			   alias = alias.toLowerCase();
+        alias = alias.toLowerCase();
+        
+        if (alias in aliases) 
+        {
+            return aliases[alias];
+        }
+        
+        throw new Error('Unknown alias: ' + alias);
 
-				   if (alias in aliases) 
-                                   {
-				     return aliases[alias];
-				   }
-
-				   throw new Error('Unknown alias: ' + alias);
-
-				 }),
+	}),
     split = this.source.replace(/^\s\s*|\s\s*$/g, '').split(/\s+/),
     cur, len = 6;
 
     while (len--) 
     {
-      cur = split[len] || '*';
-      this._parseField(cur, this.map[len], this.constraints[len]);
+        cur = split[len] || '*';
+        this._parseField(cur, this.map[len], this.constraints[len]);
     }
 
   },
@@ -63,24 +63,24 @@ CronTime.prototype =
 
     if (field.match(rangePattern))
     {
-        field.replace(rangePattern, function($0, lower, upper, step) {
-
-                      step = step || 1;
-
-                      // Positive integer higher than constraints[0]
-                      lower = Math.max(low, ~~Math.abs(lower));
-
-                      // Positive integer lower than constraints[1]
-                      upper = upper ? Math.min(high, ~~Math.abs(upper)) : lower;
-
-                      diff = step + upper - lower;
-
-                      while ((diff-=step) > -1) {
-                        typeObj[diff + lower] = true;
-                      }
-
-                    });
-
+        field.replace(rangePattern, function($0, lower, upper, step) 
+        {
+            step = step || 1;
+            
+            // Positive integer higher than constraints[0]
+            lower = Math.max(low, ~~Math.abs(lower));
+            
+            // Positive integer lower than constraints[1]
+            upper = upper ? Math.min(high, ~~Math.abs(upper)) : lower;
+            
+            diff = step + upper - lower;
+            
+            while ((diff-=step) > -1) 
+            {
+                typeObj[diff + lower] = true;
+            }
+            
+        });
     } 
     else 
     {
@@ -88,7 +88,6 @@ CronTime.prototype =
       throw new Error('Field (' + field + ') cannot be parsed');
 
     }
-
   }
 };
 

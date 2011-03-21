@@ -15,9 +15,9 @@ var CronJob = require('./cron').CronJob;
 function Scheduler()
 {
     this.jobs = {};
-    //default interval is one minute
-    this.conf={minInterval:60*1000};
-};
+    //default interval is one second
+    this.conf={minInterval:1000};
+}
 Scheduler.prototype.addJob=function(id,cronMask,task)
 {
     var job = new CronJob(id,cronMask,task);
@@ -68,7 +68,7 @@ Scheduler.prototype.release=function(id)
         job.stop();
         delete this.jobs[id];
     }
-}
+};
 Scheduler.prototype.count=function()
 {
     return Object.keys(this.jobs).length;

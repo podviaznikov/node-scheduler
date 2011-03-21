@@ -6,8 +6,8 @@ function CronJob(id,cronTime,event,conf)
 	{
 	   return new CronJob(id,cronTime, event);
 	}
-	Object.defineProperty(this, 'id', {value:id,writable : false});
-	Object.defineProperty(this, 'conf', {value:conf,writable : false});
+	Object.defineProperty(this, 'id', {value:id});//not writable
+	Object.defineProperty(this, 'conf', {value:conf});//not writable
 	if(this.conf)
 	{
 	    this.minInterval = this.conf.minInterval;
@@ -20,9 +20,9 @@ function CronJob(id,cronTime,event,conf)
 	this.cronTime = new CronTime(cronTime);
 	this.now = {};
 	this.initiated = false;
-        this.paused = false;
-	this.timer;
-};
+    this.paused = false;
+	this.timer=undefined;
+}
 
 CronJob.prototype.addEvent = function(event)
 {
@@ -68,7 +68,7 @@ CronJob.prototype.clock = function()
 		         }, Math.ceil(+date / 1000) * 1000 - +date);
 		return;
 	}
-        if(this.paused)
+    if(this.paused)
 	{
 		return;
 	}
