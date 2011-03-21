@@ -1,7 +1,7 @@
 {
   "name": "scheduler",
   "description": "Cron scheduler for node.js",
-  "version": "0.7",
+  "version": "0.7.1",
   "repository": "git://github.com/podviaznikov/node-scheduler.git",
   "author": "Anton Podviaznikov <podviaznikov@gmail.com>",
   "main": "scheduler",
