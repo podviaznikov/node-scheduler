@@ -1,4 +1,4 @@
-var scheduler = require('../scheduler').create(),
+var scheduler = require('../lib/scheduler').create(),
     assert = require('assert'),
     sys = require('util');
 exports.testAddJobAndDelete=function()

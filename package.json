@@ -1,10 +1,10 @@
 {
   "name": "scheduler",
   "description": "Cron scheduler for node.js",
-  "version": "0.7.1",
+  "version": "0.8.1",
   "repository": "git://github.com/podviaznikov/node-scheduler.git",
   "author": "Anton Podviaznikov <podviaznikov@gmail.com>",
-  "main": "scheduler",
+  "main": "./lib/scheduler",
   "directories": {
     "lib": ""
   },
